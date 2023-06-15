@@ -13,7 +13,6 @@
 #= include ../shared/names.coffee
 #= include ../shared/checker2.coffee
 
-
 Questions = new IDBStore {
 	dbVersion: 22,
 	storeName: 'questions',
@@ -809,39 +808,36 @@ get_question = (type, difficulty, category, cb) ->
 		if typeof category == 'object'
 			sampler = new AliasMethod(category)
 			category = sampler.next()
-		
+		console.log "WE WANT A QUESTION: "+type+" "+difficulty+" "+category
+		#request.get {uri:'http://localhost:5000/q/hs_regs/Science', json : true}, (err, r, body) -> console.log "BODY: " + body
+
+
+		promise = $.getJSON "http://localhost:5000/q/"+difficulty+"/"+category
+		promise.done (data) ->
+			console.log data
+			console.log "sending along!"
+			cb data, get_difficulties(type), get_categories(type)
+
 		# console.log 'qyering for', difficulty, category, type
-		Questions.iterate (item, cursor, tranny) ->
-			
-			# return unless item
-			item.seen++
-			item.inc_random += Math.random() + 1
-			Questions.put item
+		# Questions.iterate (item, cursor, tranny) ->
+		# 	# return unless item
+		# 	item.seen++
+		# 	item.inc_random += Math.random() + 1
+		# 	Questions.put item
 
-			tranny.abort()
-			cb item, get_difficulties(type), get_categories(type)
-		, {
-			index: 'type_difficulty_category_inc',
-			order: 'ASC',
-			keyRange: Questions.makeKeyRange {
-				lower: [type, difficulty, category, 0]
-			}
-			onEnd: ->
-				cb null, get_difficulties(type), get_categories(type)
-			onError: (err) ->
-		}
+		# 	tranny.abort()
+		# 	cb item, get_difficulties(type), get_categories(type)
+		# , {
+		# 	index: 'type_difficulty_category_inc',
+		# 	order: 'ASC',
+		# 	keyRange: Questions.makeKeyRange {
+		# 		lower: [type, difficulty, category, 0]
+		# 	}
+		# 	onEnd: ->
+		# 		cb null, get_difficulties(type), get_categories(type)
+		# 	onError: (err) ->
+		# }
 
-		# question_bank = offline_questions.sort((a, b) -> a._inc - b._inc)
-		# question = null
-		# for candidate in question_bank
-		# 	if candidate.difficulty is difficulty and candidate.category is category and candidate.type is type
-		# 		question = candidate
-		# 		break
-		# if question
-		# 	question._inc += Math.random() + 1
-		# setTimeout ->
-		# 	cb question, get_difficulties(type), get_categories(type)
-		# , 10
 	else
 		setTimeout ->
 			cb null, get_difficulties(type), get_categories(type)

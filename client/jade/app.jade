@@ -40,11 +40,10 @@ html(lang="en")
 				div.container
 					a.brand(href="/")
 						span.logo
-							strong Proto
-							| bowl 
-						if development
-							span.label.label-important ALPHA
-							| 
+							| Offbrand Protobowl  
+						//- if development
+						//- 	span.label.label-important ALPHA
+						//- 	| 
 						em.motto.hidden-phone(style="font-size: small")
 							if offline
 								| doing one thing and doing it without internet
@@ -285,19 +284,6 @@ html(lang="en")
 				div.span3.sidebar
 					div.span3.mobile-other-rooms
 						a(tabindex="-1", href="/") &larr; Return to Start Page
-
-					if development
-						div.span3.thumbnail
-							button.btn.btn-small.pull-right.btn-link.show-updater.release-btn(disabled) 
-								| Release
-							button.btn.btn-small.pull-right.show-updater.recompile-btn(disabled) 
-								| Build
-
-							h5(style="margin-top: 3px")
-								i.icon-code
-								| Development
-							
-
 
 					div.span3.thumbnail.timer-widget
 						h5.span3

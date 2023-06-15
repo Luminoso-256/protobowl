@@ -60,6 +60,7 @@ get_parameters = (type, difficulty, cb) -> cb get_difficulties(), get_categories
 get_by_id = (id, cb) -> cb null
 
 get_question = (type, diff, cat, cb) ->
+	console.log "type "+type+" diff"+diff+" cat"+cat
 	if diff == current_difficulty and cat == current_category and current_queue.length > 0
 		cb current_queue.shift()
 	else

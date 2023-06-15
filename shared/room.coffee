@@ -155,6 +155,7 @@ class QuizRoom
 		return active_count
 
 	get_parameters: (type, difficulty, cb) -> # cb(difficulties, categories)
+		console.log 'get_parameters was called. woo.'
 		#  async version of get_difficulties and get_categories
 		@emit 'log', {verb: 'NOT IMPLEMENTED (async get params)'}
 		cb ['HS', 'MS'], ['Science', 'Trash']
@@ -645,8 +646,9 @@ class QuizRoom
 
 			# async stuff
 			@get_parameters @type, @difficulty, (difficulties, categories) =>
-				data.difficulties = difficulties
-				data.categories = categories
+				console.log 'get_parameteres 2'
+				data.difficulties =  ["ms", "hs_easy", "hs_regs","hs_hard","hs_nats","college_easy","college_medium","college_regional","college_nats","open"]
+				data.categories = ["Literature", "History", "Science", "Fine Arts", "Religion", "Mythology", "Philosophy", "Social Science", "Current Events", "Geography", "Other Academic", "Trash"]
 				
 				if @difficulty and @difficulty not in difficulties
 					@difficulty = ''
