@@ -812,7 +812,7 @@ get_question = (type, difficulty, category, cb) ->
 		#request.get {uri:'http://localhost:5000/q/hs_regs/Science', json : true}, (err, r, body) -> console.log "BODY: " + body
 
 
-		promise = $.getJSON "http://localhost:5000/q/"+difficulty+"/"+category
+		promise = $.getJSON "https://qsrv.luminoso.dev/q/"+difficulty+"/"+category
 		promise.done (data) ->
 			console.log data
 			console.log "sending along!"
