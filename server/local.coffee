@@ -21,7 +21,8 @@ listProps = (prop) ->
 
 filterQuestions = (diff, cat) ->
 	console.log "filter called" + diff + cat
-	query_cat = cat
+	if cat != ''
+		query_cat = cat
 	questions.filter (q) ->
 		return false if diff and q.difficulty != diff
 		return false if cat and q.category != cat
@@ -65,7 +66,8 @@ get_categories = (type) -> listProps('category')
 get_difficulties = (type) -> listProps('difficulty')
 
 get_parameters = (type, difficulty, cb) ->
-	query_diff = difficulty
+	if difficulty != ''
+		query_diff = difficulty
 	cb get_difficulties(), get_categories()
 
 get_by_id = (id, cb) -> cb null

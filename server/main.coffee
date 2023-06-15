@@ -409,6 +409,9 @@ class SocketQuizPlayer extends QuizPlayer
 		@sockets.push sock.id unless sock.id in @sockets
 		blacklist = ['add_socket', 'emit', 'disconnect']
 		
+		sock.on 'error', ->
+			console.log "an error as occured. We are going to pretend we didn't see that to keep going :)"
+
 		sock.on 'disconnect', =>
 			@sockets = (s for s in @sockets when (s isnt sock.id and io.sockets.connected[s]))
 			if @sockets.length is 0
