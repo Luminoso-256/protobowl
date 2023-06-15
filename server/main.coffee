@@ -15,7 +15,12 @@ os = require 'os'
 util = require 'util'
 crypto = require 'crypto'
 namer = require '../shared/names'
-
+`
+process.on('uncaughtException', function (err) {
+  console.error(err);
+  console.log("Node NOT Exiting...");
+});
+`
 rooms = {}
 {QuizRoom} = require '../shared/room'
 {QuizPlayer} = require '../shared/player'
@@ -749,7 +754,7 @@ io.sockets.on 'connection', (sock) ->
 					user._headers = sock?.handshake?.headers
 				user._ua = sock?.handshake?.headers?['user-agent']
 			catch err
-				remote?.notifyBen? 'Internal SocketIO error', "Internal Error: \n#{err}\n#{room_name}/#{publicID}\n#{sock?.handshake?.headers}"
+				console.log 'Internal SocketIO error', "Internal Error: \n#{err}\n#{room_name}/#{publicID}\n#{sock?.handshake?.headers}"
 
 			if !user.agent and typeof user._ua == 'string' and user._ua.indexOf('Dalvik') != -1
 				user.agent = 'Minibit Android'
