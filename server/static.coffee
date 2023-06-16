@@ -23,13 +23,13 @@ app.set("views", "")
 app.use express.static('debug')
 
 app.get '/', (req, res) -> 
-	# res.redirect '/lobby'
-	res.render '../deploy/nfsn/index.html'
+	res.redirect '/main-room'
+	#res.render '../deploy/nfsn/index.html'
 app.get '/:name', (req, res) -> 
 	res.render 'debug/app.html'
 
 app.get '/:channel/:name', (req, res) -> 
 	res.render 'debug/app.html'
 
-server.listen 5555, ->
-	console.log "main listening on port 5555"
+server.listen 5588, ->
+	console.log "main listening on port 5588"
